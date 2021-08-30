@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Justo code challenge</string>
+    <string name="gender">Gender:</string>
+    <string name="personal_information">Personal information</string>
+    <string name="email">Email:</string>
+    <string name="account_information">Account information</string>
+    <string name="default_loading_string">-</string>
+    <string name="phone">Phone</string>
+    <string name="mobile_phone">Mobile phone</string>
+    <string name="username">User:</string>
+    <string name="address_information">Address information</string>
+    <string name="street">Street:</string>
+    <string name="city">City:</string>
+    <string name="state">State:</string>
+    <string name="country">Country:</string>
+    <string name="password">Password</string>
+    <string name="location_information">Location</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBQ2mZpXs-boZfOndYT_0vree84qyxUmzk</string>
 </resources>

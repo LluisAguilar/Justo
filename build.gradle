@@ -23,6 +23,9 @@ allprojects {
 
 ext {
     retrofit_version = "2.9.0"
+    picasso_version = "2.71828"
+    coroutines_version = "1.3.9"
+    maps_version = "17.0.0"
 }
 
 task clean(type: Delete) {
