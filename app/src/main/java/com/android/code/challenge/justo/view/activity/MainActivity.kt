@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setDataToViews(results: ArrayList<Result>) {
         setHeaderData(results)
-        mUserAdapter = UserProfileRecyclerAdapter(results, supportFragmentManager)
+        mUserAdapter = UserProfileRecyclerAdapter(this, results, supportFragmentManager)
         user_recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         user_recycler_view.adapter = mUserAdapter
     }
