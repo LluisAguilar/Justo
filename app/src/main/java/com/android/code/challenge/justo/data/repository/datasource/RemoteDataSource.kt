@@ -1,45 +1,36 @@
 package com.android.code.challenge.justo.data.repository.datasource
 
-import androidx.lifecycle.MutableLiveData
-import com.android.code.challenge.justo.data.retrofit.JustoClient
-import com.android.code.challenge.justo.data.retrofit.JustoService
-import com.android.code.challenge.justo.data.retrofit.response.UserProfile
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.android.code.challenge.justo.domain.helpers.ResultWrapper
+import kotlinx.coroutines.*
+import retrofit2.HttpException
+import java.io.IOException
 
 class RemoteDataSource {
 
-    private val mJustoClient: JustoClient = JustoClient.instance!!
-    private val mJustoService: JustoService = mJustoClient.getService()
+    suspend fun <T> getUserProfileResponse(dispatcher:CoroutineDispatcher, apiCall: suspend () -> T) : ResultWrapper<T> {
 
-    fun getUserProfile() : MutableLiveData<UserProfile> {
-
-
-        val userProfileResponse = MutableLiveData<UserProfile>()
-
-        val call : Call<UserProfile> = mJustoService.getUserProfile()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            call.enqueue(object : Callback<UserProfile> {
-                override fun onResponse(call: Call<UserProfile>, response: Response<UserProfile>) {
-                    if (response.code() == 200){
-                        userProfileResponse.value = UserProfile(true, response.body()!!.info, response.body()!!.results, "")
-                    } else {
-                        userProfileResponse.value = UserProfile(false, response.body()!!.info, response.body()!!.results, response.errorBody().toString())
+        return withContext(dispatcher) {
+            try {
+                ResultWrapper.Success(apiCall.invoke())
+            } catch (throwable: Throwable) {
+                when(throwable) {
+                    is IOException -> ResultWrapper.NetworkError
+                    is HttpException -> {
+                        val code = throwable.code()
+                        val errorResponse = convertErrorBody(throwable)
+                        ResultWrapper.GenericError(code,errorResponse)
+                    }
+                    else -> {
+                        ResultWrapper.GenericError(null, null)
                     }
                 }
-
-                override fun onFailure(call: Call<UserProfile>, t: Throwable) {
-                    userProfileResponse.value = UserProfile(false, null, null, t.message)
-                }
-
-            })
+            }
         }
 
-        return userProfileResponse
     }
+
+    private fun convertErrorBody(throwable: HttpException): String {
+        return  throwable.message() ?: "Error not found"
+    }
+
 }

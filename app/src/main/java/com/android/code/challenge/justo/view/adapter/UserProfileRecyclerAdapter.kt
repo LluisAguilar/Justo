@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.code.challenge.justo.R
-import com.android.code.challenge.justo.data.retrofit.response.Result
+import com.android.code.challenge.justo.domain.model.Result
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -16,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class UserProfileRecyclerAdapter(val context:Context, var usersList: ArrayList<Result>, val supportMapFragment: FragmentManager) : RecyclerView.Adapter<UserProfileRecyclerAdapter.UserListViewHolder>() {
+class UserProfileRecyclerAdapter(val context:Context, var user: Result, val supportMapFragment: FragmentManager) : RecyclerView.Adapter<UserProfileRecyclerAdapter.UserListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_information_item, parent, false)
@@ -24,15 +24,15 @@ class UserProfileRecyclerAdapter(val context:Context, var usersList: ArrayList<R
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
-        holder.bind(context, usersList.get(position), supportMapFragment)
+        holder.bind(context, user, supportMapFragment)
     }
 
     override fun getItemCount(): Int {
-        return usersList.size
+        return 1
     }
 
-    fun updateUserData(userList: ArrayList<Result>){
-        usersList = userList
+    fun updateUserData(user: Result){
+        this.user = user
         notifyDataSetChanged()
     }
 

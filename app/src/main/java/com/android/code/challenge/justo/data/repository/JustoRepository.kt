@@ -1,18 +1,11 @@
 package com.android.code.challenge.justo.data.repository
 
-import androidx.lifecycle.LiveData
-import com.android.code.challenge.justo.data.repository.datasource.RemoteDataSource
-import com.android.code.challenge.justo.data.retrofit.response.UserProfile
+import com.android.code.challenge.justo.domain.helpers.ResultWrapper
+import com.android.code.challenge.justo.domain.model.UserProfileDomain
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-class JustoRepository() {
+interface JustoRepository {
 
-    private var mRemoteDataSource : RemoteDataSource
-
-    init {
-        mRemoteDataSource = RemoteDataSource()
-    }
-
-    fun getUserProfile() : LiveData<UserProfile>{
-        return  mRemoteDataSource.getUserProfile()
-    }
+    suspend fun getUserResponse(dispatcher: CoroutineDispatcher = Dispatchers.IO): ResultWrapper<UserProfileDomain>
 }
