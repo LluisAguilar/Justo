@@ -1,6 +1,6 @@
 package com.android.code.challenge.justo.data.retrofit
 
-import com.android.code.challenge.justo.data.StringDataCommonHelper.Companion.BASE_URL
+import com.android.code.challenge.justo.data.helper.StringDataCommonHelper.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.android.code.challenge.justo.data
+package com.android.code.challenge.justo.data.helper
 
 class StringDataCommonHelper {
 

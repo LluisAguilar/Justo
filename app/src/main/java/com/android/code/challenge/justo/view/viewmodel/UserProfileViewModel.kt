@@ -18,9 +18,7 @@ class UserProfileViewModel : ViewModel() {
 
     fun getUserProfileResponse(){
         viewModelScope.launch {
-
-            val response = mGetUserProfileUseCase.getUserProfile()
-            when (response) {
+            when (val response = mGetUserProfileUseCase.getUserProfile()) {
                 is ResultWrapper.Success -> userProfileResult.postValue(setResultValue(response.value.results))
                 is ResultWrapper.NetworkError -> userProfileError.postValue(response.toString())
                 is ResultWrapper.GenericError -> userProfileError.postValue(response.code.toString() + " " + response.error)
