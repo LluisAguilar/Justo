@@ -12,8 +12,10 @@ import com.android.code.challenge.justo.domain.model.Result
 import com.android.code.challenge.justo.view.viewmodel.UserProfileViewModel
 import com.android.code.challenge.justo.view.adapter.UserProfileRecyclerAdapter
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mUserProfileViewModel: UserProfileViewModel

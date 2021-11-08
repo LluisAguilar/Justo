@@ -1,5 +1,6 @@
 package com.android.code.challenge.justo.view.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,17 +9,17 @@ import com.android.code.challenge.justo.domain.model.*
 import com.android.code.challenge.justo.domain.usecases.GetUserProfileUseCase
 import kotlinx.coroutines.launch
 
-class UserProfileViewModel : ViewModel() {
+
+class UserProfileViewModel @ViewModelInject constructor(private val getUserProfileUseCase: GetUserProfileUseCase) : ViewModel() {
 
 
-    private val mGetUserProfileUseCase = GetUserProfileUseCase()
     val userProfileResult = MutableLiveData<Result>()
     val userProfileError = MutableLiveData<String>()
 
 
     fun getUserProfileResponse(){
         viewModelScope.launch {
-            when (val response = mGetUserProfileUseCase.getUserProfile()) {
+            when (val response = getUserProfileUseCase.getUserProfile()) {
                 is ResultWrapper.Success -> userProfileResult.postValue(setResultValue(response.value.results))
                 is ResultWrapper.NetworkError -> userProfileError.postValue(response.toString())
                 is ResultWrapper.GenericError -> userProfileError.postValue(response.code.toString() + " " + response.error)
